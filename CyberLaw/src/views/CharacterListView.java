@@ -19,43 +19,44 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import models.Warehouse;
+import models.Character;
 
 import controller.MDIChild;
 import controller.MDIParent;
 import controller.MenuCommands;
-import controller.WarehouseListController;
+import controller.CharacterListController;
 
-public class WarehouseListView extends MDIChild {
+public class CharacterListView extends MDIChild {
 
-	private JList<Warehouse> listWarehouse;
-	private WarehouseListController myList;
-	private Warehouse selectedModel;
+	private JList<Character> listCharacter;
+	private CharacterListController myList;
+	private Character selectedModel;
+	private int size;
 	JPanel panel;
 	
 	
-	public WarehouseListView(String title, WarehouseListController list, MDIParent m){
+	public CharacterListView(String title, CharacterListController list, MDIParent m){
 		super(title, m);
 		
 		list.setMyListView(this);
 		
 		myList = list;
-		listWarehouse = new JList<Warehouse>(myList);
+		listCharacter = new JList<Character>(myList);
 		
-		listWarehouse.setCellRenderer(new WarehouseListCellRenderer());
-		listWarehouse.setPreferredSize(new Dimension(200, 200));
+		listCharacter.setCellRenderer(new CharacterListCellRenderer());
+		listCharacter.setPreferredSize(new Dimension(200, 200));
 		
-		listWarehouse.addMouseListener(new MouseAdapter() {
+		listCharacter.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				if(evt.getClickCount() == 2) {
-					int index = listWarehouse.locationToIndex(evt.getPoint());
+					int index = listCharacter.locationToIndex(evt.getPoint());
 					selectedModel = myList.getElementAt(index);
 					openDetailView();
 				}
 			}
 		});
 		
-		this.add(new JScrollPane(listWarehouse));
+		this.add(new JScrollPane(listCharacter));
 		this.setPreferredSize(new Dimension(240, 200));
 		
 		//////ADD//////
@@ -75,9 +76,9 @@ public class WarehouseListView extends MDIChild {
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		JButton buttonEdit = new JButton("Edit");
-		listWarehouse.addListSelectionListener(new ListSelectionListener() {
+		listCharacter.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent l) {
-				int index = listWarehouse.getMinSelectionIndex();
+				int index = listCharacter.getMinSelectionIndex();
 				selectedModel = myList.getElementAt(index);
 				index = 1;
 			}
@@ -98,8 +99,8 @@ public class WarehouseListView extends MDIChild {
 		buttonDel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				deleteWarehouse();
-				listWarehouse.updateUI();
+				deleteCharacter();
+				listCharacter.updateUI();
 			}
 
 		});
@@ -108,15 +109,15 @@ public class WarehouseListView extends MDIChild {
 	}
 	
 	protected void openDetailView() {
-		parent.doCommand(MenuCommands.SHOW_DETAIL_WAREHOUSE, this);
+		parent.doCommand(MenuCommands.SHOW_DETAIL_CHARACTER, this);
 	}
 	
 	public void openEditView() {
-		parent.doCommand(MenuCommands.SHOW_EDIT_WAREHOUSE, this);
+		parent.doCommand(MenuCommands.SHOW_EDIT_CHARACTER, this);
 	}
 	
 	public void openAddView() {
-		parent.doCommand(MenuCommands.SHOW_ADD_WAREHOUSE, this);
+		parent.doCommand(MenuCommands.SHOW_ADD_CHARACTER, this);
 	}
 
 	protected void childClosing() {
@@ -127,14 +128,14 @@ public class WarehouseListView extends MDIChild {
 		myList.unregisterAsObserver();
 	}
 	
-	private void deleteWarehouse() {
-		parent.doCommand(MenuCommands.DELETE_WAREHOUSE, this);
+	private void deleteCharacter() {
+		parent.doCommand(MenuCommands.DELETE_CHARACTER, this);
 		selectedModel = null;
 		
 	}
 	
 
-	public Warehouse getSelectedWarehouse() {
+	public Character getSelectedCharacter() {
 		return selectedModel;
 	}
 

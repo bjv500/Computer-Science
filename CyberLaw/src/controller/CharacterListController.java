@@ -6,17 +6,17 @@ import java.util.Observer;
 
 import javax.swing.AbstractListModel;
 
-import models.Warehouse;
-import models.WarehouseList;
+import models.Character;
+import models.CharacterList;
 
 
-public class WarehouseListController extends AbstractListModel<Warehouse> implements Observer {
+public class CharacterListController extends AbstractListModel<Character> implements Observer {
 
-	private List<Warehouse> myList;
+	private List<Character> myList;
 	private MDIChild myListView;
 	
 	
-	public WarehouseListController(WarehouseList wl){
+	public CharacterListController(CharacterList wl){
 		super();
 		myList = wl.getList();
 		registerAsObserver();
@@ -29,7 +29,7 @@ public class WarehouseListController extends AbstractListModel<Warehouse> implem
 	}
 
 	@Override
-	public Warehouse getElementAt(int index) {
+	public Character getElementAt(int index) {
 		if(index > getSize())
 			throw new IndexOutOfBoundsException("Index " + index + " is out of list bounds!");
 		return myList.get(index);
@@ -47,12 +47,12 @@ public class WarehouseListController extends AbstractListModel<Warehouse> implem
 
 	public void registerAsObserver() {
 		//register with the observable models
-		for(Warehouse w: myList)
+		for(Character w: myList)
 			w.addObserver(this);
 	}
 	
 	public void unregisterAsObserver() {
-		for(Warehouse w: myList)
+		for(Character w: myList)
 			w.deleteObserver(this);
 		
 	}
@@ -61,7 +61,7 @@ public class WarehouseListController extends AbstractListModel<Warehouse> implem
 		return myListView;
 	}
 
-	public void addtolist(Warehouse w){
+	public void addtolist(Character w){
 		myList.add(w);
 		int i = myList.indexOf(w);
 		fireIntervalAdded(this,i,i);
