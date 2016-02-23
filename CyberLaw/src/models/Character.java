@@ -13,10 +13,8 @@ public class Character extends Observable{
 	public CharacterList Characterlist = new CharacterList();
 	
 	
-	public Character(CharacterList list) {
-		Characterlist = list;
-		size = Characterlist.getSize();
-		id = size + 1;
+	public Character() {
+		id = 0;
 		happiness = 0;
 		state = false;
 	}
@@ -26,8 +24,6 @@ public class Character extends Observable{
 		id = tid;
 		happiness = thappiness;
 		state = tstate;
-		
-
 	}
 	
 	public long getId(){
@@ -42,8 +38,9 @@ public class Character extends Observable{
 		return happiness;
 	}
 	
-	public long setId( int tid){
-		return id = tid;
+	public int setId( int tid){
+		id = tid;
+		return id;
 	}
 
 	public boolean setState(boolean tstate){
@@ -52,11 +49,6 @@ public class Character extends Observable{
 	
 	public int setHappiness(int thappiness){
 		return happiness = thappiness;
-	}
-
-	public void finishUpdate() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -29,6 +29,8 @@ public class Launcher {
 		characterList.addCharacterToList(new Character(2, 2, false));
 		characterList.addCharacterToList(new Character(3, 3, false));
 		
+		System.out.println(characterList);
+		
 		MDIParent appFrame = new MDIParent("Cyber Law Project - Eric Applonie", characterList);
 		
 		JPanel panel = new JPanel();

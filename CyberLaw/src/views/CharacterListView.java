@@ -31,7 +31,6 @@ public class CharacterListView extends MDIChild {
 	private JList<Character> listCharacter;
 	private CharacterListController myList;
 	private Character selectedModel;
-	private int size;
 	JPanel panel;
 	
 	
@@ -41,6 +40,7 @@ public class CharacterListView extends MDIChild {
 		list.setMyListView(this);
 		
 		myList = list;
+		//System.out.println(list);
 		listCharacter = new JList<Character>(myList);
 		
 		listCharacter.setCellRenderer(new CharacterListCellRenderer());

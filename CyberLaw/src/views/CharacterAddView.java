@@ -38,12 +38,12 @@ public class CharacterAddView extends MDIChild implements Observer{
 	private CharacterList thisCharacterlist = new CharacterList();
 	private CharacterListController wlcx;
 	
-	public CharacterAddView(String title, CharacterListController wlc , MDIParent m, CharacterList characterlist) {
+	public CharacterAddView(String title, MDIParent m, CharacterList characterlist) {
 		super(title, m);
 
 		thisCharacterlist = characterlist;
 		size = thisCharacterlist.getSize();
-		myCharacter = new Character(thisCharacterlist);
+		myCharacter = new Character();
 		myCharacter.addObserver(this);
 		
 		JPanel panel = new JPanel();
@@ -90,16 +90,12 @@ public class CharacterAddView extends MDIChild implements Observer{
 			myCharacter.setHappiness(intHappiness);
 			
 			refreshFields();
-			
-			//myCharacter.finishUpdate();
-
 			parent.displayChildMessage("Added");
 		} catch (Exception e) {
 			parent.displayChildMessage(e.getMessage());
 			return;
 		}
 		
-		//thisCharacterlist.addCharacterToList(myCharacter);
 		thisCharacterlist.addCharacterToList(myCharacter);
 		setInternalFrameVisible(false);
 		childClosing();
@@ -114,8 +110,8 @@ public class CharacterAddView extends MDIChild implements Observer{
 
 	public void refreshFields() {
 		fldId.setText("" + myCharacter.getId());
-		String capHappiness = Integer.toString(myCharacter.getHappiness());
-		fldHappiness.setText(capHappiness);
+		String cHappiness = Integer.toString(myCharacter.getHappiness());
+		fldHappiness.setText(cHappiness);
 		this.setTitle("Character:" + myCharacter.getId());
 	}
 	

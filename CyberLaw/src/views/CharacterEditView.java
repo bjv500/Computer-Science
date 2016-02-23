@@ -84,8 +84,6 @@ public class CharacterEditView extends MDIChild implements Observer{
 			myCharacter.setHappiness(intHappiness);
 			
 			refreshFields();
-			
-			myCharacter.finishUpdate();
 
 			parent.displayChildMessage("Saved");
 		} catch (Exception e) {

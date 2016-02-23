@@ -34,7 +34,7 @@ public class MDIParent extends JFrame {
 	
 	public MDIParent(String title, CharacterList wList) {
 		super(title);
-		
+		System.out.println(wList.getList());
 		sizeoflist = wList.getSize();
 		System.out.println(wList.getSize());
 		
@@ -89,7 +89,7 @@ public class MDIParent extends JFrame {
 				break;
 				
 			case SHOW_ADD_CHARACTER :
-		    	CharacterAddView v3 = new CharacterAddView("Character " + characterList.getSize() + 1, wlc, this, characterList);
+		    	CharacterAddView v3 = new CharacterAddView("Character " + characterList.getSize() + 1, this, characterList);
 		    	openMDIChild(v3);
 				break;
 				
