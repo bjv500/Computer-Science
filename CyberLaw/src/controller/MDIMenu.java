@@ -34,15 +34,27 @@ public class MDIMenu extends JMenuBar {
 		menu.add(menuItem);
 		this.add(menu);
 		
-		menu = new JMenu("Warehouses");
-		menuItem = new JMenuItem("Warehouse List");
+		menu = new JMenu("Simulation");
+		menuItem = new JMenuItem("Prep Simulation");
 		menuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parent.doCommand(MenuCommands.SHOW_LIST_WAREHOUSE, null);
+				parent.doCommand(MenuCommands.SHOW_START_SIM, null);
+			}
+		});
+		JMenuItem menuItem1 = new JMenuItem("Character List");
+		menuItem1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parent.doCommand(MenuCommands.SHOW_LIST_CHARACTER, null);
 			}
 		});
 		menu.add(menuItem);
-		this.add(menu);		
+		menu.add(menuItem1);
+		this.add(menu);	
+		
+		
+		
+
 	}
 }

@@ -3,21 +3,22 @@ package controller;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import models.Warehouse;
-import models.WarehouseList;
+import models.Character;
+import models.CharacterList;
 
 public class Launcher {
 	
+
 	public static void createAndShowGUI() {
 		
-		WarehouseList warehouseList = new WarehouseList();
+		CharacterList CharacterList = new CharacterList();
 		
-		warehouseList.addWarehouseToList(new Warehouse("Warehouse Alpha", "1234 Main", "Big City", "Texas", "12345", 1000));
-		warehouseList.addWarehouseToList(new Warehouse("Warehouse Bravo", "1234 Main", "Big City", "Texas", "12345", 1000));
-		warehouseList.addWarehouseToList(new Warehouse("Warehouse Charlie", "1234 Main", "Big City", "Texas", "12345", 1000));
+//		CharacterList.addCharacterToList(new Character(1, 3, false));
+//		CharacterList.addCharacterToList(new Character(2, 6, true));
+//		CharacterList.addCharacterToList(new Character(3, 7, true));
 		
 		
-		MDIParent appFrame = new MDIParent("Assignment 1 - Cabnetron", warehouseList);
+		MDIParent appFrame = new MDIParent("Simulation", CharacterList);
 		
 		
 		//use exit on close if you only want windowClosing to be called (can abort closing here also)
@@ -32,7 +33,6 @@ public class Launcher {
 	}
 	
 	public static void main(String[] args) {
-		//CS 4743 Assignemtn 1 by Eric Applonie
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();

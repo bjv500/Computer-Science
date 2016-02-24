@@ -11,12 +11,13 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
-import models.Warehouse;
-import models.WarehouseList;
-import views.WarehouseAddView;
-import views.WarehouseDetailView;
-import views.WarehouseEditView;
-import views.WarehouseListView;
+import models.Character;
+import models.CharacterList;
+import views.CharacterAddView;
+import views.CharacterDetailView;
+import views.CharacterEditView;
+import views.CharacterListView;
+import views.StartUpView;
 
 public class MDIParent extends JFrame {
 	
@@ -25,17 +26,17 @@ public class MDIParent extends JFrame {
 	private int newFrameX = 0, newFrameY = 0;
 	
 	
-	private WarehouseList warehouseList = new WarehouseList();
+	private CharacterList CharacterList = new CharacterList();
 	
 	private List<MDIChild> openViews;
 	
-	private WarehouseListController wlc;
+	private CharacterListController wlc;
 	
-	public MDIParent(String title, WarehouseList wList) {
+	public MDIParent(String title, CharacterList wList) {
 		super(title);
 		
-		warehouseList = wList;
-		wlc = new WarehouseListController(warehouseList);
+		CharacterList = wList;
+		wlc = new CharacterListController(CharacterList);
 		
 		//init the view list
 		openViews = new LinkedList<MDIChild>();
@@ -55,6 +56,7 @@ public class MDIParent extends JFrame {
 				closeProperly();
 			}
 		});
+		
 
 	}
 
@@ -66,32 +68,37 @@ public class MDIParent extends JFrame {
 				this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 				break;
 				
-			case SHOW_LIST_WAREHOUSE :
-				WarehouseListView v1 = new WarehouseListView("Warehouse List", wlc, this);
+			case SHOW_LIST_CHARACTER :
+				CharacterListView v1 = new CharacterListView("Character List", wlc, this);
 				//v1.setSingleOpenOnly(true);
 				openMDIChild(v1);
 				
 				break;
-			case SHOW_DETAIL_WAREHOUSE :
-				Warehouse w = ((WarehouseListView) caller).getSelectedWarehouse();
-		    	WarehouseDetailView v = new WarehouseDetailView(w.getName(), w, this);
+			case SHOW_DETAIL_CHARACTER :
+				Character w = ((CharacterListView) caller).getSelectedCharacter();
+		    	CharacterDetailView v = new CharacterDetailView("Character " + w.getId(), w, this);
 				openMDIChild(v);
 				break;
 				
-			case SHOW_EDIT_WAREHOUSE :
-				Warehouse w2 = ((WarehouseListView) caller).getSelectedWarehouse();
-		    	WarehouseEditView v2 = new WarehouseEditView(w2.getName(), w2, this);
+			case SHOW_EDIT_CHARACTER :
+				Character w2 = ((CharacterListView) caller).getSelectedCharacter();
+		    	CharacterEditView v2 = new CharacterEditView("Character " + w2.getId(), w2, this);
 				openMDIChild(v2);
 				break;
 				
-			case SHOW_ADD_WAREHOUSE :
-		    	WarehouseAddView v3 = new WarehouseAddView("New Warehouse", wlc, this, warehouseList);
+			case SHOW_ADD_CHARACTER :
+		    	CharacterAddView v3 = new CharacterAddView("New Character", wlc, this, CharacterList);
 		    	openMDIChild(v3);
 				break;
 				
-			case DELETE_WAREHOUSE :
-				warehouseList.removeWarehouseFromList(((WarehouseListView) caller).getSelectedWarehouse());
+			case DELETE_CHARACTER :
+				CharacterList.removeCharacterFromList(((CharacterListView) caller).getSelectedCharacter());
 				break;	
+				
+			case SHOW_START_SIM :
+				StartUpView s = new StartUpView("Start up", wlc , this, CharacterList);
+				openMDIChild(s);
+				break;
 				
 		}
 	}

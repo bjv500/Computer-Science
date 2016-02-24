@@ -14,46 +14,30 @@ import javax.swing.JPanel;
 
 import controller.MDIChild;
 import controller.MDIParent;
-import models.Warehouse;
+import models.Character;
 
-public class WarehouseDetailView extends MDIChild implements Observer{
+public class CharacterDetailView extends MDIChild implements Observer{
 
-	private Warehouse myWarehouse;
-	private JLabel fldId, fldName, fldAddress, fldCity, fldState, fldZip, fldCap;
+	private Character myCharacter;
+	private JLabel fldId, fldName, fldAddress, fldCity, fldState, fldZip, fldHappiness;
 	
 	
-	public WarehouseDetailView(String title, Warehouse warehouse, MDIParent m) {
+	public CharacterDetailView(String title, Character Character, MDIParent m) {
 		super(title, m);
 		
-		myWarehouse = warehouse;
-		myWarehouse.addObserver(this);;
+		myCharacter = Character;
+		myCharacter.addObserver(this);
 		
 		JPanel panel = new JPanel(); 
 		panel.setLayout(new GridLayout(7, 2));
 		
-		panel.add(new JLabel("Id: " + warehouse.getId()));
-		fldId = new JLabel("");
-		panel.add(fldId);
+		panel.add(new JLabel("Id: " + Character.getId()));
+//		fldId = new JLabel("");
+//		panel.add(fldId);
 		
-		panel.add(new JLabel("Address: " + warehouse.getAddress()));
-		fldAddress = new JLabel("");
-		panel.add(fldAddress);
-		
-		panel.add(new JLabel("City: " + warehouse.getCity()));
-		fldCity = new JLabel("");
-		panel.add(fldCity);
-		
-		panel.add(new JLabel("State: " + warehouse.getState()));
-		fldState = new JLabel("");
-		panel.add(fldState);
-		
-		panel.add(new JLabel("Zip Code: " + warehouse.getZip()));
-		fldZip = new JLabel("");
-		panel.add(fldZip);
-		
-		panel.add(new JLabel("Capacity: " + warehouse.getCap()));
-		fldCap = new JLabel("");
-		panel.add(fldCap);
+		panel.add(new JLabel("Happiness: " + Character.getHappiness()));
+		fldHappiness = new JLabel("");
+		panel.add(fldHappiness);
 		
 		this.add(panel);
 		
@@ -81,7 +65,7 @@ public class WarehouseDetailView extends MDIChild implements Observer{
 		super.childClosing();
 				
 		//unregister from observable
-		myWarehouse.deleteObserver(this);
+		myCharacter.deleteObserver(this);
 	}
 
 	@Override

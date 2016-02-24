@@ -7,16 +7,16 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import models.Warehouse;
+import models.Character;
 
-public class WarehouseListCellRenderer implements ListCellRenderer<Warehouse> {
+public class CharacterListCellRenderer implements ListCellRenderer<Character> {
 
 	private final DefaultListCellRenderer DEFAULT_RENDERER = new DefaultListCellRenderer();
 	
 	@Override
-	public Component getListCellRendererComponent(JList<? extends Warehouse> list, Warehouse value, int index,
+	public Component getListCellRendererComponent(JList<? extends Character> list, Character value, int index,
 			boolean isSelected, boolean cellHasFocus) {
-		JLabel renderer = (JLabel) DEFAULT_RENDERER.getListCellRendererComponent(list, value.getName(), index, isSelected, cellHasFocus);
+		JLabel renderer = (JLabel) DEFAULT_RENDERER.getListCellRendererComponent(list, "Character " + value.getId(), index, isSelected, cellHasFocus);
 		return renderer;
 	}
 
