@@ -20,5 +20,4 @@ public class CharacterListCellRenderer implements ListCellRenderer<Character> {
 		return renderer;
 	}
 
-
 }

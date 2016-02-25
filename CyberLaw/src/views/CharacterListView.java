@@ -43,7 +43,8 @@ public class CharacterListView extends MDIChild {
 		listCharacter = new JList<Character>(myList);
 		
 		listCharacter.setCellRenderer(new CharacterListCellRenderer());
-		listCharacter.setPreferredSize(new Dimension(200, 200));
+		listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+		listCharacter.setVisibleRowCount(10);
 		
 		listCharacter.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
@@ -56,7 +57,7 @@ public class CharacterListView extends MDIChild {
 		});
 		
 		this.add(new JScrollPane(listCharacter));
-		this.setPreferredSize(new Dimension(240, 200));
+		this.setPreferredSize(new Dimension(240, 300));
 		
 		//////ADD//////
 //		panel = new JPanel();

@@ -39,6 +39,8 @@ public class CharacterDetailView extends MDIChild implements Observer{
 		fldHappiness = new JLabel("");
 		panel.add(fldHappiness);
 		
+		panel.add(new JLabel("Selfishness: " + Character.getSelfishness()));
+		
 		this.add(panel);
 		
 

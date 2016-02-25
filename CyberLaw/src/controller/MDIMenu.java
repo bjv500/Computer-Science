@@ -49,8 +49,17 @@ public class MDIMenu extends JMenuBar {
 				parent.doCommand(MenuCommands.SHOW_LIST_CHARACTER, null);
 			}
 		});
+		JMenuItem menuRun = new JMenuItem("RUN");
+		menuRun.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parent.doCommand(MenuCommands.SHOW_RUN_VIEW, null);
+			}
+		});
+		
 		menu.add(menuItem);
 		menu.add(menuItem1);
+		menu.add(menuRun);
 		this.add(menu);	
 		
 		

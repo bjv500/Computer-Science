@@ -6,8 +6,7 @@ import java.util.UUID;
 
 public class Character extends Observable{
 
-	private int id, happiness;
-	private boolean selfish;
+	private int id, happiness, selfish;
 
 	public CharacterList Characterlist = new CharacterList();
 	
@@ -17,17 +16,15 @@ public class Character extends Observable{
 	
 	public Character(CharacterList myList) {
 		id = myList.getSize() + 1;
-		setHappiness(5);
-		setSelfish(false);
+		setHappiness(0);
+		setSelfish(0);
 	}
 	
-	public Character(int Id, int Happiness, boolean Selfish) {
+	public Character(int Id, int Happiness, int Selfish) {
 		this();
 		id = Id;
 		happiness = Happiness;
 		selfish = Selfish;
-		
-
 	}
 	
 	public int getId(){
@@ -47,15 +44,24 @@ public class Character extends Observable{
 		return happiness;
 	}
 
-	public boolean isSelfish() {
-		return selfish;
+	public String isSelfish() {
+		return this.getSelfishness();
 	}
 
-	public void setSelfish(boolean selfish) {
+	public void setSelfish(int selfish) {
 		this.selfish = selfish;
 	}
 
 	public void finishUpdate() {
 		notifyObservers();
+	}
+
+	public String getSelfishness() {
+		if(selfish == 1)
+				return "Selfish";
+		else if(selfish == 0)
+				return "Not Selfish";
+		else
+			return "Mixed";
 	}	
 }

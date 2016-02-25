@@ -17,6 +17,7 @@ import views.CharacterAddView;
 import views.CharacterDetailView;
 import views.CharacterEditView;
 import views.CharacterListView;
+import views.RunView;
 import views.StartUpView;
 
 public class MDIParent extends JFrame {
@@ -98,6 +99,11 @@ public class MDIParent extends JFrame {
 			case SHOW_START_SIM :
 				StartUpView s = new StartUpView("Start up", wlc , this, CharacterList);
 				openMDIChild(s);
+				break;
+				
+			case SHOW_RUN_VIEW :
+				RunView r = new RunView("Start up", wlc , this, CharacterList);
+				openMDIChild(r);
 				break;
 				
 		}

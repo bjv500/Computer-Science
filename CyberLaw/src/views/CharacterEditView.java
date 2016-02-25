@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import controller.MDIChild;
@@ -34,21 +36,32 @@ public class CharacterEditView extends MDIChild implements Observer{
 		myCharacter.addObserver(this);;
 		
 		JPanel panel = new JPanel(); 
-		panel.setLayout(new GridLayout(7, 2));
-		
-		panel.add(new JLabel("Id: " + Character.getId()));
-//		fldId = new JLabel("");
-//		panel.add(fldId);
+		JPanel panel1 = new JPanel(); 
+		panel.setLayout(new GridLayout(1, 2));
 	
 		panel.add(new JLabel("Happiness: "));
 		fldHappiness = new JTextField("");
 		panel.add(fldHappiness);
-		
-		this.add(panel);
+	
+		panel.setLayout(new FlowLayout());
+	     JRadioButton selfish = new JRadioButton("Selfish");
+	     JRadioButton unselfish = new JRadioButton("Unselfish");
+	     JRadioButton mixed = new JRadioButton("Mixed");
+	     ButtonGroup bG = new ButtonGroup();
+	     bG.add(selfish);
+	     bG.add(unselfish);
+	     bG.add(mixed);
+	     panel.add(selfish);
+	     panel.add(unselfish);
+	     panel.add(mixed);
+	     selfish.setSelected(true);
+	     //this.setVisible(true);
+	     
+	     this.add(panel);
 		
 		//add a Save button to write field changes back to model data
-		panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panel1 = new JPanel();
+		panel1.setLayout(new BorderLayout());
 		JButton button = new JButton("Save");
 		button.addActionListener(new ActionListener() {
 			@Override
@@ -56,11 +69,11 @@ public class CharacterEditView extends MDIChild implements Observer{
 				saveCharacter();
 			}
 		});
-		panel.add(button);
-		this.add(panel, BorderLayout.SOUTH);
+		panel1.add(button);
+		this.add(panel1, BorderLayout.SOUTH);
 		refreshFields();
 		
-		this.setPreferredSize(new Dimension(360, 210));
+		this.setPreferredSize(new Dimension(350, 100));
 	}
 
 	private void saveCharacter() {
