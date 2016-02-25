@@ -2,11 +2,13 @@ package models;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 import java.util.UUID;
 
 public class Character extends Observable{
 
 	private int id, happiness, selfish;
+	Random rn = new Random();
 
 	public CharacterList Characterlist = new CharacterList();
 	
@@ -16,8 +18,8 @@ public class Character extends Observable{
 	
 	public Character(CharacterList myList) {
 		id = myList.getSize() + 1;
-		setHappiness(0);
-		setSelfish(0);
+		setHappiness(rn.nextInt(100) + 1);
+		setSelfish(rn.nextInt(3) + 0);
 	}
 	
 	public Character(int Id, int Happiness, int Selfish) {
@@ -27,8 +29,8 @@ public class Character extends Observable{
 		selfish = Selfish;
 	}
 	
-	public int getId(){
-		return id;
+	public String getId(){
+		return Integer.toString(id);
 	}
 	
 	public void setId(int Id){

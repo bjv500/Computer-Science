@@ -97,6 +97,8 @@ public class MDIParent extends JFrame {
 				break;	
 				
 			case SHOW_START_SIM :
+				CharacterListView v9 = new CharacterListView("Character List", wlc, this);
+				openMDIChild(v9);
 				StartUpView s = new StartUpView("Start up", wlc , this, CharacterList);
 				openMDIChild(s);
 				break;
