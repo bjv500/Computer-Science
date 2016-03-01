@@ -15,6 +15,10 @@ public class CharacterList {
 		
 	}
 	
+	public void clearList(){
+		myList.clear();
+	}
+	
 	public Character removeCharacterFromList(Character w) {
 		if(myList.contains(w)) {
 			myList.remove(w);

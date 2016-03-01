@@ -17,6 +17,7 @@ public class Character extends Observable{
 	}
 	
 	public Character(CharacterList myList) {
+
 		id = myList.getSize() + 1;
 		setHappiness(rn.nextInt(100) + 1);
 		setSelfish(rn.nextInt(3) + 0);

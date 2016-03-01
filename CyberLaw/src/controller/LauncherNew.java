@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,6 +47,7 @@ public class LauncherNew {
 	private static Character selectedModel;
 	private static JLabel lId, lHappiness, lSelfish;
 	JPanel panel;
+	
 
 	public static void main(String[] args) {
 
@@ -53,78 +56,31 @@ public class LauncherNew {
 		Runnable r = new Runnable() {
 
 			public void run() {
-				final JFrame frame = new JFrame("Simulation");
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-				final JPanel gui = new JPanel(new BorderLayout(5, 5));
-				gui.setBorder(new TitledBorder("BorderLayout(5,5)"));
-
-				JPanel plafComponents = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
-				plafComponents.setBorder(new TitledBorder("FlowLayout(FlowLayout.RIGHT, 3,3)"));
-
-				final UIManager.LookAndFeelInfo[] plafInfos = UIManager.getInstalledLookAndFeels();
-				String[] plafNames = new String[plafInfos.length];
-				for (int ii = 0; ii < plafInfos.length; ii++) {
-					plafNames[ii] = plafInfos[ii].getName();
-				}
-				final JComboBox plafChooser = new JComboBox(plafNames);
-				plafComponents.add(plafChooser);
-
-				final JCheckBox pack = new JCheckBox("Pack on PLAF change", true);
-				plafComponents.add(pack);
-
-				plafChooser.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent ae) {
-						int index = plafChooser.getSelectedIndex();
-						try {
-							UIManager.setLookAndFeel(plafInfos[index].getClassName());
-							SwingUtilities.updateComponentTreeUI(frame);
-							if (pack.isSelected()) {
-								frame.pack();
-								frame.setMinimumSize(frame.getSize());
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-
-				gui.add(plafComponents, BorderLayout.NORTH);
-
-				JPanel dynamicLabels = new JPanel(new BorderLayout(4, 4));
-				dynamicLabels.setBorder(new TitledBorder("Run(4,4)"));
-				gui.add(dynamicLabels, BorderLayout.WEST);
-
-				final JPanel labels = new JPanel(new GridLayout(0, 2, 3, 3));
-				labels.setBorder(new TitledBorder("GridLayout(0,2,3,3)"));
-
-				JButton addNew = new JButton("Add Another Label");
-				dynamicLabels.add(addNew, BorderLayout.NORTH);
-				addNew.addActionListener(new ActionListener() {
-
-					private int labelCount = 0;
-
-					public void actionPerformed(ActionEvent ae) {
-						labels.add(new JLabel("Label " + ++labelCount));
-						frame.validate();
-					}
-				});
-
-				dynamicLabels.add(new JScrollPane(labels), BorderLayout.CENTER);
-
-				final CharacterListController myList = new CharacterListController(characterList);
 				
-				for(int i = 0; i<200; i++){
+				final CharacterListController myList = new CharacterListController(characterList);
+				final JList<Character> listCharacter = new JList<Character>(myList);
+				
+				for(int i = 0; i < 2; i++){
 					Character newC = new Character(characterList);
 					myList.addtolist(newC);
-					newC.setId(i+1);
+					newC.setId(myList.getSize());
 				}
-
-				final JList<Character> listCharacter = new JList<Character>(myList);
 				
 				listCharacter.setCellRenderer(new CharacterListCellRenderer());
 				listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
 				listCharacter.setVisibleRowCount(10);
+				
+				final JFrame frame = new JFrame("Simulation");
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				final JPanel gui = new JPanel(new BorderLayout(5, 5));
+				gui.setBorder(new TitledBorder(""));
+
+				JPanel runOpt = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
+				runOpt.setBorder(new TitledBorder("Run Options"));
+				
+				JLabel addChars = new JLabel("Characters");
+				runOpt.add(addChars);
 				
 				final JPanel imagePanel = new JPanel(new GridLayout(3, 1));
 				imagePanel.setBorder(new TitledBorder("Details"));
@@ -136,6 +92,176 @@ public class LauncherNew {
 				imagePanel.add(lId);
 				imagePanel.add(lHappiness);
 				imagePanel.add(lSelfish);
+				
+				
+				final JTextField fldNumChars = new JTextField();
+				fldNumChars.setPreferredSize(new Dimension(80, 22));
+				runOpt.add(fldNumChars);
+				
+				JButton cList = new JButton("Add to List");
+				runOpt.add(cList);
+				cList.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						
+						int numChars = 0;
+						String nChars = fldNumChars.getText();
+						if(nChars == ""){
+							numChars = 1;
+						}
+						else{
+							numChars = Integer.parseInt(nChars);
+						}
+						
+						lId.setText("Adding " + numChars + " characters to list");
+						lSelfish.setText("");
+						lHappiness.setText("");
+						for(int i = 0; i < numChars; i++){
+							
+							Character newC = new Character(characterList);
+							myList.addtolist(newC);
+							newC.setId(myList.getSize());
+							listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+							listCharacter.setVisibleRowCount(10);
+						}
+						frame.validate();
+					}
+				});
+				
+
+				
+				JButton clList = new JButton("Clear List");
+				runOpt.add(clList);
+				clList.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						lId.setText("Clearing list, must have 2");
+						lSelfish.setText("");
+						lHappiness.setText("characters.");
+						myList.clearList();
+						characterList.clearList();
+						listCharacter.removeAll();
+						for(int i = 0; i < 2; i++){
+							Character newC = new Character(characterList);
+							myList.addtolist(newC);
+							newC.setId(myList.getSize());
+						}
+						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+						listCharacter.setVisibleRowCount(10);
+						frame.validate();
+					}
+				});
+				
+				JButton run = new JButton("Run");
+				runOpt.add(run);
+				run.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						for(Character c : characterList.getList()){
+							if(c.getSelfishness() == "Selfish"){
+								c.setHappiness(c.getHappiness() + 5);
+								
+							}
+							else if(c.getSelfishness() == "Not Selfish"){
+								c.setHappiness(c.getHappiness() - 2);
+								
+							}
+							else
+								c.setHappiness(c.getHappiness() - 5);
+								
+						}
+						index = listCharacter.getMinSelectionIndex();
+						selectedModel = myList.getElementAt(index);
+						lId.setText("Id: " + selectedModel.getId());
+						lHappiness.setText("Happiness: " + selectedModel.getHappiness());
+						lSelfish.setText("Selfishness: " + selectedModel.getSelfishness());
+						frame.validate();
+					}
+
+
+				});
+
+
+
+				gui.add(runOpt, BorderLayout.NORTH);
+
+				JPanel dynamicLabels = new JPanel(new GridBagLayout());
+				GridBagConstraints c = new GridBagConstraints();
+				dynamicLabels.setBorder(new TitledBorder("Character Options"));
+				dynamicLabels.setPreferredSize( new Dimension( 200, 50 ) );
+				gui.add(dynamicLabels, BorderLayout.AFTER_LINE_ENDS);
+				
+				JButton editChar = new JButton("  Edit Character  ");
+				dynamicLabels.add(editChar);
+				c.weightx = 0.5;
+				c.gridx = 0;
+				c.gridy = 2;
+				c.insets = new Insets(10,0,0,0);
+				dynamicLabels.add(editChar, c);
+				editChar.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+//						labels.add(new JLabel("Label " + ++labelCount));
+						frame.validate();
+					}
+				});
+				
+				JButton addChar = new JButton("  Add Character  ");
+				dynamicLabels.add(addChar);
+				c.weightx = .5;
+				c.gridx = 0;
+				c.gridy = 3;
+				c.insets = new Insets(10,0,0,0);
+				dynamicLabels.add(addChar, c);
+				addChar.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						Character newC = new Character(characterList);
+						myList.addtolist(newC);
+						newC.setId(myList.getSize());
+						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+						listCharacter.setVisibleRowCount(10);
+						frame.validate();
+					}
+				});
+				
+				JButton delChar = new JButton("Delete Character");
+				dynamicLabels.add(delChar);
+				c.weightx = .5;
+				c.gridx = 0;
+				c.gridy = 4;
+				c.insets = new Insets(10,0,0,0);
+				dynamicLabels.add(delChar, c);
+				addChar.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+						listCharacter.setVisibleRowCount(10);
+						
+						frame.validate();
+					}
+				});
+				
+				JButton sRun = new JButton(" Run on selected ");
+				dynamicLabels.add(sRun);
+				c.weightx = .5;
+				c.gridx = 0;
+				c.gridy = 5;
+				c.insets = new Insets(10,0,0,0);
+				dynamicLabels.add(sRun, c);
+				addChar.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ae) {
+						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
+						listCharacter.setVisibleRowCount(10);
+						
+						frame.validate();
+					}
+				});
+				
+
+				
+				
 				
 				listCharacter.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent evt) {
@@ -169,4 +295,11 @@ public class LauncherNew {
 		};
 		SwingUtilities.invokeLater(r);
 	}
+	
+	public JList popList(){
+		return null;
+		
+	}
+	
+	
 }

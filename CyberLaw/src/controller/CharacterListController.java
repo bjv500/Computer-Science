@@ -67,4 +67,9 @@ public class CharacterListController extends AbstractListModel<Character> implem
 		fireIntervalAdded(this,i,i);
 	}
 
+	public void clearList() {
+		myList.clear();
+		
+	}
+
 }
