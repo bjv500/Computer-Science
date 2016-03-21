@@ -30,8 +30,8 @@ public class Character extends Observable{
 		selfish = Selfish;
 	}
 	
-	public String getId(){
-		return Integer.toString(id);
+	public int getId(){
+		return id;
 	}
 	
 	public void setId(int Id){

@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GradientPaint;
@@ -94,7 +93,7 @@ public class LauncherNew {
 				imagePanel.add(lSelfish);
 				
 				
-				final JTextField fldNumChars = new JTextField();
+				final JTextField fldNumChars = new JTextField("1");
 				fldNumChars.setPreferredSize(new Dimension(80, 22));
 				runOpt.add(fldNumChars);
 				
@@ -170,12 +169,14 @@ public class LauncherNew {
 								c.setHappiness(c.getHappiness() - 5);
 								
 						}
+						if(index > 0){
 						index = listCharacter.getMinSelectionIndex();
 						selectedModel = myList.getElementAt(index);
 						lId.setText("Id: " + selectedModel.getId());
 						lHappiness.setText("Happiness: " + selectedModel.getHappiness());
 						lSelfish.setText("Selfishness: " + selectedModel.getSelfishness());
 						frame.validate();
+						}
 					}
 
 
@@ -221,6 +222,11 @@ public class LauncherNew {
 						newC.setId(myList.getSize());
 						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
 						listCharacter.setVisibleRowCount(10);
+						
+						lId.setText("Adding one character to list");
+						lSelfish.setText("");
+						lHappiness.setText("");
+						
 						frame.validate();
 					}
 				});
@@ -232,11 +238,19 @@ public class LauncherNew {
 				c.gridy = 4;
 				c.insets = new Insets(10,0,0,0);
 				dynamicLabels.add(delChar, c);
-				addChar.addActionListener(new ActionListener() {
+				delChar.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent ae) {
+
+						characterList.removeCharacterFromList(myList.getElementAt(index));
 						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
 						listCharacter.setVisibleRowCount(10);
+	
+						listCharacter.updateUI();
+						
+						lId.setText("Deleting character from list");
+						lSelfish.setText("");
+						lHappiness.setText("");
 						
 						frame.validate();
 					}
@@ -249,12 +263,30 @@ public class LauncherNew {
 				c.gridy = 5;
 				c.insets = new Insets(10,0,0,0);
 				dynamicLabels.add(sRun, c);
-				addChar.addActionListener(new ActionListener() {
+				sRun.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent ae) {
 						listCharacter.setPreferredSize(new Dimension(200, myList.getSize() * 18));
 						listCharacter.setVisibleRowCount(10);
 						
+						index = listCharacter.getMinSelectionIndex();
+						selectedModel = myList.getElementAt(index);
+						
+						
+						if(selectedModel.getSelfishness() == "Selfish"){
+							selectedModel.setHappiness(selectedModel.getHappiness() + 5);
+							
+						}
+						else if(selectedModel.getSelfishness() == "Not Selfish"){
+							selectedModel.setHappiness(selectedModel.getHappiness() - 2);
+							
+						}
+						else
+							selectedModel.setHappiness(selectedModel.getHappiness() - 5);
+							
+						lId.setText("Id: " + selectedModel.getId());
+						lHappiness.setText("Happiness: " + selectedModel.getHappiness());
+						lSelfish.setText("Selfishness: " + selectedModel.getSelfishness());
 						frame.validate();
 					}
 				});

@@ -32,7 +32,7 @@ public class CharacterListController extends AbstractListModel<Character> implem
 	public Character getElementAt(int index) {
 		if(index > getSize())
 			throw new IndexOutOfBoundsException("Index " + index + " is out of list bounds!");
-		return myList.get(index);
+		return (myList).get(index);
 	}
 
 	@Override
